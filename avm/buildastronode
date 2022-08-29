@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e    # halt on first error
+
+FLAGS="-O3 -Wall"
+CC=gcc
+
+# Step into cii library and compile all objects
+cd "astronode"
+
+rm -f *.o  # make sure no object files are left hanging around
+
+case $# in
+  0) set *.c ;; # compile all .c files
+esac
+
+# compile each to a .o file
+for cfile 
+do
+  gcc $FLAGS "-I../cii" -c $cfile
+done

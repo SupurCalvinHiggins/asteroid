@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e    # halt on first error
+
+FLAGS="-O3 -Wall"
+CC=gcc
+# LINKS="cii/testlib.c cii/table.c cii/except.c cii/assert.c cii/mem.c"
+
+./buildcii
+./buildstate
+./buildastronode
+./buildwalk
+
+INCLUDES=" -I./state -I./astronode -I./walk -I./gc/include"
+
+LINKS="libgc.dll.a $PWD/cii/array.o $PWD/cii/assert.o $PWD/state/symtab.o " 
+LINKS+="$PWD/cii/except.o $PWD/cii/mem.o $PWD/cii/seq.o $PWD/cii/table.o "
+LINKS+="$PWD/state/state.o $PWD/walk/walk.o $PWD/astronode/astronode.o "
+
+CC $FLAGS $INCLUDES "-I$PWD/cii" test.c -o test $LINKS
