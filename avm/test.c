@@ -1,10 +1,11 @@
 #include <stdio.h>
 
-#include "gc.h"
+
 #include "state.h"
 #include "symtab.h"
 #include "astronode.h"
 #include "walk.h"
+#include "astrogc.h"
 
 int main(int argc,char **argv){
     

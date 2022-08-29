@@ -17,5 +17,5 @@ esac
 # compile each to a .o file
 for cfile 
 do
-  gcc $FLAGS "-I../cii" "-I../astronode" -c $cfile
+  gcc $FLAGS "-I../cii" "-I../astronode" "-I../astrogc" -c $cfile
 done

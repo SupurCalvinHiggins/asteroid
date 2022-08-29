@@ -3,11 +3,12 @@
 #include "stdlib.h"
 #include "string.h"
 #include "stdio.h"
+#include "astrogc.h"
 /******************************************************************************/
 AstroNode* AstroNode_new(char type){
     assert(type);
 
-    AstroNode* new = malloc(sizeof(struct astronode_s));
+    AstroNode* new = AstroMem_new(sizeof(struct astronode_s));
     assert(new);
 
     new->type = type;
@@ -90,7 +91,7 @@ bool AstroNode_compare(AstroNode* first, AstroNode* second){
             return AstroIn_compare((AstroIn*)first,(AstroIn*)second);
         default:                                       // UNKNOWN
             fprintf(stdout,"ERROR: walk function: Node type %c is unrecognized.\n",type1);
-        // TODO error unknown node type
+            // TODO error unknown node type
             return NULL;
 
   }
@@ -99,7 +100,7 @@ bool AstroNode_compare(AstroNode* first, AstroNode* second){
 AstroInteger* AstroInteger_new(long value){
     //assert(value); can be 0
 
-    AstroInteger* new = malloc(sizeof(struct astrointeger_s));
+    AstroInteger* new = AstroMem_new(sizeof(struct astrointeger_s));
     assert(new);
     
     AstroNode_setType( (AstroNode*)new, 'i');
@@ -133,7 +134,7 @@ bool AstroInteger_compare(AstroInteger* first,AstroInteger* second){
 AstroReal* AstroReal_new(double value){
     //assert(value); can be 0
 
-    AstroReal* new = malloc(sizeof(struct astroreal_s));
+    AstroReal* new = AstroMem_new(sizeof(struct astroreal_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'r');
@@ -170,7 +171,7 @@ bool AstroReal_compare(AstroReal* first,AstroReal* second){
 AstroBoolean* AstroBoolean_new(bool value){
     //assert(value); can be false
 
-    AstroBoolean* new = malloc(sizeof(struct astroboolean_s));
+    AstroBoolean* new = AstroMem_new(sizeof(struct astroboolean_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'b');
@@ -206,7 +207,7 @@ bool AstroBoolean_compare(AstroBoolean* first,AstroBoolean* second){
 AstroString* AstroString_new(char* value){
     assert(value);
 
-    AstroString* new = malloc(sizeof(struct astrostring_s));
+    AstroString* new = AstroMem_new(sizeof(struct astrostring_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 's');
@@ -244,7 +245,7 @@ AstroLineInfo* AstroLineInfo_new(char* module_name, unsigned long line_number){
     assert(module_name);
     assert(line_number);
 
-    AstroLineInfo* new = malloc(sizeof(struct astrolineinfo_s));
+    AstroLineInfo* new = AstroMem_new(sizeof(struct astrolineinfo_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'l');
@@ -294,7 +295,7 @@ bool AstroLineInfo_compare(AstroLineInfo* first, AstroLineInfo* second){
 }
 /******************************************************************************/
 AstroNone* AstroNone_new(){
-    AstroNone* new = malloc(sizeof(struct astrolineinfo_s));
+    AstroNone* new = AstroMem_new(sizeof(struct astrolineinfo_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'N');
@@ -308,7 +309,7 @@ bool AstroNone_compare(AstroNone* first,AstroNone* second){
 }
 /******************************************************************************/
 AstroNil* AstroNil_new(){
-    AstroNil* new = malloc(sizeof(struct astronil_s));
+    AstroNil* new = AstroMem_new(sizeof(struct astronil_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'n');
@@ -324,7 +325,7 @@ bool AstroNil_compare(AstroNil* first,AstroNil* second){
 AstroList* AstroList_new(unsigned long length, AstroNode** contents){
     assert(length);
 
-    AstroList* new = malloc(sizeof(struct astrolist_s));
+    AstroList* new = AstroMem_new(sizeof(struct astrolist_s));
     assert(new);
 
     new->length = length;
@@ -387,7 +388,7 @@ bool AstroList_compare(AstroList* first, AstroList* second){
 AstroTuple* AstroTuple_new(unsigned long length, AstroNode** contents){
     assert(length);
 
-    AstroTuple* new = malloc(sizeof(struct astrolist_s));
+    AstroTuple* new = AstroMem_new(sizeof(struct astrolist_s));
     assert(new);
 
     new->length = length;
@@ -452,7 +453,7 @@ AstroToList* AstroToList_new(AstroNode* start, AstroNode* stop, AstroNode* strid
     assert(stop);
     assert(stride);
 
-    AstroToList* new = malloc(sizeof(struct astrotolist_s));
+    AstroToList* new = AstroMem_new(sizeof(struct astrotolist_s));
     assert(new);
 
     AstroNode_setType((AstroNode*)new, 'T');
@@ -501,7 +502,7 @@ bool AstroToList_compare(AstroToList* first,AstroToList* second){
 /******************************************************************************/
 AstroHeadTail* AstroHeadTail_new(AstroNode* head, AstroNode* tail){
     
-    AstroHeadTail* new = malloc(sizeof(struct astroheadtail_s));
+    AstroHeadTail* new = AstroMem_new(sizeof(struct astroheadtail_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'h');
@@ -549,7 +550,7 @@ AstroRawToList* AstroRawToList_new(AstroNode* start, AstroNode* stop, AstroNode*
     assert(stop);
     assert(stride);
 
-    AstroRawToList* new = malloc(sizeof(struct astrotolist_s));
+    AstroRawToList* new = AstroMem_new(sizeof(struct astrotolist_s));
     assert(new);
 
     AstroNode_setType((AstroNode*)new, 'R');
@@ -584,7 +585,7 @@ bool AstroRawToList_compare(AstroRawToList* first, AstroRawToList* second){
 /******************************************************************************/
 AstroRawHeadTail* AstroRawHeadTail_new(AstroNode* head, AstroNode* tail){
     
-    AstroRawHeadTail* new = malloc(sizeof(struct astrorawheadtail_s));
+    AstroRawHeadTail* new = AstroMem_new(sizeof(struct astrorawheadtail_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'H');
@@ -609,7 +610,7 @@ bool AstroRawHeadTail_compare(AstroRawHeadTail* first, AstroRawHeadTail* second)
 /******************************************************************************/
 AstroSequence* AstroSequence_new(AstroNode* first, AstroNode* second){
 
-    AstroSequence* new = malloc(sizeof(struct astrosequence_s ));
+    AstroSequence* new = AstroMem_new(sizeof(struct astrosequence_s ));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'S');
@@ -654,7 +655,7 @@ bool AstroSequence_compare(AstroSequence* first,AstroSequence* second){
 /******************************************************************************/
 AstroFunction* AstroFunction_new( AstroList* body_list ){
 
-    AstroFunction* new = malloc(sizeof(struct astrofunction_s ));
+    AstroFunction* new = AstroMem_new(sizeof(struct astrofunction_s ));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'f');
@@ -702,7 +703,7 @@ bool AstroFunction_compare(AstroFunction* first,AstroFunction* second){
 /******************************************************************************/
 AstroObject* AstroObject_new( AstroID* struct_id, AstroList* object_memory){
 
-    AstroObject* new = malloc(sizeof(struct astroobject_s));
+    AstroObject* new = AstroMem_new(sizeof(struct astroobject_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'o');
@@ -749,7 +750,7 @@ bool AstroObject_compare(AstroObject* first, AstroObject* second){
 /******************************************************************************/
 AstroEval* AstroEval_new( AstroNode* expression){
 
-    AstroEval* new = malloc(sizeof( struct astroeval_s));
+    AstroEval* new = AstroMem_new(sizeof( struct astroeval_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'e');
@@ -781,7 +782,7 @@ bool AstroEval_compare( AstroEval* first, AstroEval* second){
 /******************************************************************************/
 AstroQuote* AstroQuote_new( AstroNode* expression){
 
-    AstroQuote* new = malloc(sizeof(struct astroquote_s));
+    AstroQuote* new = AstroMem_new(sizeof(struct astroquote_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'q');
@@ -813,7 +814,7 @@ bool AstroQuote_compare( AstroQuote* first, AstroQuote* second){
 /******************************************************************************/
 AstroConstraint* AstroConstraint_new( AstroNode* expression){
 
-    AstroConstraint* new = malloc(sizeof(struct astroconstraint_s));
+    AstroConstraint* new = AstroMem_new(sizeof(struct astroconstraint_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'c');
@@ -845,7 +846,7 @@ bool AstroConstraint_compare( AstroConstraint* first, AstroConstraint* second ){
 /******************************************************************************/
 AstroTypeMatch* AstroTypeMatch_new( AstroNode* expression){
 
-    AstroTypeMatch* new = malloc(sizeof(struct astrotypematch_s));
+    AstroTypeMatch* new = AstroMem_new(sizeof(struct astrotypematch_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'C');
@@ -877,7 +878,7 @@ bool AstroTypeMatch_compare( AstroTypeMatch* first, AstroTypeMatch* second){
 /******************************************************************************/
 AstroForeign* AstroForeign_new( void* content ){
 
-    AstroForeign* new = malloc(sizeof(struct astroforeign_s));
+    AstroForeign* new = AstroMem_new(sizeof(struct astroforeign_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'F');
@@ -913,7 +914,7 @@ bool AstroForeign_compare( AstroForeign* first, AstroForeign* second){
 /******************************************************************************/
 AstroID* AstroID_new(char* name ){
 
-    AstroID* new = malloc(sizeof(struct astroid_s));
+    AstroID* new = AstroMem_new(sizeof(struct astroid_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'I');
@@ -949,7 +950,7 @@ bool AstroID_compare( AstroID* first, AstroID* second){
 /******************************************************************************/
 AstroApply* AstroApply_new( AstroNode* function, AstroNode* argument){
 
-    AstroApply* new = malloc(sizeof(struct astroapply_s));
+    AstroApply* new = AstroMem_new(sizeof(struct astroapply_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'a');
@@ -994,7 +995,7 @@ bool AstroApply_compare( AstroApply* first, AstroApply* second){
 /******************************************************************************/
 AstroIndex* AstroIndexNew( AstroNode* structure, AstroNode* index_exp){
 
-    AstroIndex* new = malloc(sizeof(struct astroindex_s));
+    AstroIndex* new = AstroMem_new(sizeof(struct astroindex_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'x');
@@ -1039,7 +1040,7 @@ bool AstroIndex_compare( AstroIndex* first, AstroIndex* second){
 /******************************************************************************/
 AstroEscape* AstroEscape_new( void* content){
     
-    AstroEscape* new = malloc( sizeof( struct astroescape_s));
+    AstroEscape* new = AstroMem_new( sizeof( struct astroescape_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'E');
@@ -1050,7 +1051,7 @@ AstroEscape* AstroEscape_new( void* content){
 /******************************************************************************/
 AstroIs* AstroIs_new(AstroNode* pattern, AstroNode* term){
 
-    AstroIs* new = malloc(sizeof(struct astrois_s));
+    AstroIs* new = AstroMem_new(sizeof(struct astrois_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'X');
@@ -1095,7 +1096,7 @@ bool AstroIs_compare(AstroIs* first, AstroIs* second){
 /******************************************************************************/
 AstroIn* AstroIn_new(AstroNode* expression,AstroNode* expression_list){
 
-    AstroIn* new = malloc(sizeof(struct astroin_s));
+    AstroIn* new = AstroMem_new(sizeof(struct astroin_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'A');
@@ -1140,7 +1141,7 @@ bool AstroIn_compare( AstroIn* first, AstroIn* second){
 /******************************************************************************/
 AstroIf* AstroIf_new( AstroNode* cond_exp, AstroNode* then_exp, AstroNode* else_exp){
     
-    AstroIf* new = malloc(sizeof( struct astroif_s));
+    AstroIf* new = AstroMem_new(sizeof( struct astroif_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'w');
@@ -1183,7 +1184,7 @@ void AstroIf_setElse( AstroIf* node, AstroNode* else_exp){
 /******************************************************************************/
 AstroNamedPattern* AstroNamedPattern_new( AstroID* name, AstroNode* pattern){
 
-    AstroNamedPattern* new = malloc(sizeof(struct astronamedpattern_s));
+    AstroNamedPattern* new = AstroMem_new(sizeof(struct astronamedpattern_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'W');
@@ -1215,7 +1216,7 @@ void AstroNamedPattern_setPattern(AstroNamedPattern* node, AstroNode* pattern){
 /******************************************************************************/
 AstroDeref* AstroDeref_new( AstroNode* expression ){
 
-    AstroDeref* new = malloc(sizeof(struct astroderef_s));
+    AstroDeref* new = AstroMem_new(sizeof(struct astroderef_s));
     assert(new);
 
     AstroNode_setType( (AstroNode*)new, 'd');

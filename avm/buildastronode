@@ -17,5 +17,5 @@ esac
 # compile each to a .o file
 for cfile 
 do
-  gcc $FLAGS "-I../cii" -c $cfile
+  gcc $FLAGS "-I../cii" "-I../astrogc/gc/include" "-I../astrogc" -c $cfile
 done

@@ -3,6 +3,7 @@
 #include "assert.h"
 #include "astronode.h"
 #include "state.h"
+#include "astrogc.h"
 
 bool map2boolean( AstroNode* node);
 
@@ -190,7 +191,7 @@ AstroList* to_list_exp(AstroToList* node, State* state){
 
   index = 0;
   if (stop>start){
-    arrayContents = malloc((stop-start)/stride * sizeof(AstroNode*));
+    arrayContents = AstroMem_new((stop-start)/stride * sizeof(AstroNode*));
 
     for (i = start;i < stop;i += stride){
       arrayContents[index++] = (AstroNode*)AstroInteger_new(i);
@@ -198,7 +199,7 @@ AstroList* to_list_exp(AstroToList* node, State* state){
     return AstroList_new( (stop-start)/stride, arrayContents);
 
   } else {
-    arrayContents = malloc(((start-stop)/stride) * sizeof(AstroNode*));
+    arrayContents = AstroMem_new(((start-stop)/stride) * sizeof(AstroNode*));
 
     for (i = start;i > stop;i -= stride){
       arrayContents[index++] = (AstroNode*)AstroInteger_new(i);
@@ -225,7 +226,7 @@ AstroList* head_tail_exp(AstroHeadTail* node, State* state){
   tail_length = AstroList_getLength( (AstroList*)AstroHeadTail_getTail(node));
 
   // Construct the return AstroList
-  array_contents = malloc((1 + tail_length) * sizeof(AstroNode*));
+  array_contents = AstroMem_new((1 + tail_length) * sizeof(AstroNode*));
   for (i=1;i<=tail_length;++i){
     array_contents[i] = AstroList_getElement( (AstroList*) AstroHeadTail_getTail(node), (i - 1) );
   }
@@ -466,7 +467,7 @@ int main(int argc, char* argv[]){
   AstroReal* y3 =    AstroReal_new( 3.3 );
   AstroBoolean* z = AstroBoolean_new( true );
 
-  AstroNode** rawTuple = malloc( 3 * sizeof( AstroNode* ));
+  AstroNode** rawTuple = AstroMem_new( 3 * sizeof( AstroNode* ));
   rawTuple[0] = (AstroNode*)y1;
   rawTuple[1] = (AstroNode*)y2;
   rawTuple[2] = (AstroNode*)y3;
@@ -477,7 +478,7 @@ int main(int argc, char* argv[]){
   walk( (AstroNode*)tup );
   walk( (AstroNode*)tup );
 
-  AstroNode** rawArray = malloc( 3 * sizeof( AstroNode* ));
+  AstroNode** rawArray = AstroMem_new( 3 * sizeof( AstroNode* ));
   rawArray[0] = (AstroNode*)y1;
   rawArray[1] = (AstroNode*)y2;
   rawArray[2] = (AstroNode*)y3;

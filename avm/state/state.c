@@ -9,6 +9,7 @@
 #include "seq.h"
 #include "array.h"
 #include "astronode.h"
+#include "astrogc.h"
 /******************************************************************************/
 const int MODULES_HINT = 10; 
 /******************************************************************************/
@@ -16,11 +17,11 @@ const int MODULES_HINT = 10;
 /******************************************************************************/
 State* State_new() {
 
-	State* new_state = malloc( sizeof( struct state_s ));
+	State* new_state = (State*)AstroMem_new( sizeof( struct state_s ));
 	SymTab_T new_symtab = SymTab_new();
 	Seq_T module_list = Seq_new( MODULES_HINT);
-	//ASTNode_lineinfo *init_line = malloc( sizeof(ASTNode_lineinfo));
-	char *init_mname = malloc(8 * sizeof(char));
+	//ASTNode_lineinfo *init_line = AstroMem_new( sizeof(ASTNode_lineinfo));
+	char *init_mname = (char*)AstroMem_new(8 * sizeof(char));
 
 	assert(new_state);
 	assert(new_symtab);
